@@ -38,11 +38,7 @@ function get_default_web_concurrency() {
 }
 
 function maybe_run_in_init_wrapper() {
-  if [[ -z "$ENABLE_INIT_WRAPPER" ]]; then
-    exec "$@"
-  else
-    exec $STI_SCRIPTS_PATH/init-wrapper "$@"
-  fi
+  exec $STI_SCRIPTS_PATH/init-wrapper "$@"
 }
 
 APP_HOME=$(readlink -f "${APP_HOME:-.}")

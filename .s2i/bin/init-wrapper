@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo " :::::::::::::::: init-wrapper :::::::::::::"
+
 # Overview of how this script works: http://veithen.io/2014/11/16/sigterm-propagation.html
 # Set a trap to kill the main app process when this
 # init script receives SIGTERM or SIGINT
