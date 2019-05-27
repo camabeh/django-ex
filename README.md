@@ -1,3 +1,10 @@
+
+
+
+
+s2i build -c . centos/python-36-centos7 abc
+ab -l -k -c 500 -n 3000 -v 2 http://django-ex-tmp.skp.osc.tipsport.it/ > out.txt && cat out.txt | grep HTTP | grep -v 'HTTP/1.0 2' && tac out.txt | head -n 40
+
 # Openshift quickstart: Django
 
 This is a [Django](http://www.djangoproject.com) project that you can use as the starting point to develop your own and deploy it on an [OpenShift](https://github.com/openshift/origin) cluster.

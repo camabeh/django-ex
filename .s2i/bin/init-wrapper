@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Overview of how this script works: http://veithen.io/2014/11/16/sigterm-propagation.html
+# Set a trap to kill the main app process when this
+# init script receives SIGTERM or SIGINT
+trap 'touch /tmp/process-in-termination && sleep 1 && kill -s TERM $PID' TERM INT
+# Execute the main application in the background
+"$@" &
+PID=$!
+# wait command always terminates when trap is caught, even if the process hasn't finished yet
+wait $PID
+# Remove the trap and wait till the app process finishes completely
+trap - TERM INT
+# We wait again, since the first wait terminates when trap is caught
+wait $PID
+# Exit with the exit code of the app process
+STATUS=$?
+exit $STATUS
+
+# test -f /tmp/process-in-termination || curl localhost:8080/actuator/info
+# test -f /tmp/process-in-termination || curl localhost:8080; echo $?
+
+# s2i build --network=host --loglevel=5 -c . centos/python-36-centos7 abc
